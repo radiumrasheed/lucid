@@ -3795,7 +3795,7 @@ test.group('Base Model | fetch', (group) => {
   })
 
   test('raise exception when row is not found', async ({ fs, assert }) => {
-    assert.plan(1)
+    assert.plan(2)
 
     const app = new AppFactory().create(fs.baseUrl, () => {})
     await app.init()
@@ -3817,8 +3817,9 @@ test.group('Base Model | fetch', (group) => {
 
     try {
       await User.findOrFail(1)
-    } catch ({ message }) {
+    } catch ({ message, model }) {
       assert.equal(message, 'Row not found')
+      assert.equal(model.name, User.name)
     }
   })
 
